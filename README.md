@@ -1,0 +1,4 @@
+## Tested Environment
+gcc version 10.5.0 (GCC)
+### Command
+g++ -O3 tsp_greedy_opt.cpp -o tsp_o
