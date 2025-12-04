@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     shuffleNodes(graph);
     writeBestCycle(bestCycle);
     std::cout << "Min cost: " << minCost << std::endl;
-    checkCycle(bestCycle, graph);
+    // checkCycle(bestCycle, graph);
 }
 
 void bestGreedyCycle(std::vector<std::vector<double>>& graph)
