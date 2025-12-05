@@ -27,6 +27,7 @@ void checkCycle(std::vector<int> bestCycle, std::vector<std::vector<double>>& gr
 void bestGreedyCycle(std::vector<std::vector<double>>& graph);
 void shuffleNodes(std::vector<std::vector<double>>& graph);
 void checkCycleCost(std::vector<int> cycle, std::vector<std::vector<double>>& graph);
+void TSP(std::string fileName);
 
 int numNodes = 0;
 double timeLimit = 57.0; // Time limit, ~60 seconds with breathing room
@@ -38,17 +39,24 @@ std::chrono::high_resolution_clock::time_point startTime;
 
 int main(int argc, char* argv[])
 {
+    std::cout << "Running Euclidean Distance Graph" << std::endl;
+    TSP("TSP_1000_euclidianDistance.txt");
+    std::cout << std::endl;
+
+    numNodes = 0;
+    bestCycle.clear();
+    minCost = std::numeric_limits<double>::max();
+    cycleCount = 0;
+    std::cout << "Running Random Distance Graph" << std::endl;
+    TSP("TSP_1000_randomDistance.txt");
+}
+
+void TSP(std::string fileName)
+{
     // Start clock
     startTime = std::chrono::high_resolution_clock::now();
-
-    if (argc != 2)
-    {
-        std::cout << "Input atmost one graph at a time" << std::endl;
-        exit(1);
-    }
-
     // Create adjacency matrix from file in argument
-    std::vector<std::vector<double>> graph = parseGraph(argv[1]);
+    std::vector<std::vector<double>> graph = parseGraph(fileName);
     // printGraph(graph);
 
     bestGreedyCycle(graph);
@@ -240,7 +248,8 @@ void writeBestCycle (std::vector<int> cycle)
 {
     std::cout << "Cycles evaluated: " << std::scientific << std::setprecision(0) << static_cast<double>(cycleCount) << std::endl;
     std::cout << std::fixed << std::setprecision(2); // Set to 2-decimal format for minCost
-    std::ofstream cycleTxt ("solution_922092536.txt");
+    std::ofstream cycleTxt;
+    cycleTxt.open("solution_922092536.txt", std::ios::app);
     if(cycleTxt.fail())
     {
         std::cout << "Invalid output file" << std::endl;
